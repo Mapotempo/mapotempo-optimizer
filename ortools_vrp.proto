@@ -43,6 +43,7 @@ message Capacity {
   float limit               = 1;
   float overload_multiplier = 2;
   bool counting             = 3;
+  float initial             = 4;
 }
 
 message Vehicle {

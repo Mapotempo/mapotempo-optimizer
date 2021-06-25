@@ -783,6 +783,20 @@ void AddCapacityDimensions(const TSPTWDataDT& data, RoutingModel& routing,
     routing.AddDimensionWithVehicleCapacity(
         routing.RegisterTransitCallback(quantity_evaluator), LLONG_MAX, capacities, false,
         "quantity" + std::to_string(unit_i));
+
+
+    int v = 0;
+    for (const TSPTWDataDT::Vehicle& vehicle : data.Vehicles()) {
+      const int64 start_index = routing.Start(v);
+      const std::string kQuantity = ("quantity" + std::to_string(unit_i)).c_str();
+      const operations_research::RoutingDimension& unit_dimension =
+        routing.GetDimensionOrDie("quantity" + std::to_string(unit_i));
+        IntVar* const unit_slack_var = unit_dimension.SlackVar(start_index);
+        IntVar* const unit_cumul_var = unit_dimension.CumulVar(start_index);
+        unit_slack_var->SetMax(0);
+        unit_cumul_var->SetMax(vehicle.initial_load[unit_i]);
+        ++v;
+    }
   }
 }
 
