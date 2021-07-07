@@ -402,7 +402,6 @@ void RelationBuilder(const TSPTWDataDT& data, RoutingModel& routing,
         IntVar* const previous_active_var = routing.ActiveVar(previous_index);
         IntVar* const active_var          = routing.ActiveVar(current_index);
 
-        solver->AddConstraint(solver->MakeLessOrEqual(active_var, previous_active_var));
         IntVar* const previous_vehicle_var = routing.VehicleVar(previous_index);
         IntVar* const vehicle_var          = routing.VehicleVar(current_index);
 
