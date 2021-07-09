@@ -38,3 +38,10 @@ Dev
 After dev the code shall be formatted according to the style file of the project with the following command:
 
     clang-format -i *.cc *.h
+
+Continuous Integration
+======================
+In github settings, create the following secrets :
+ - REGISTRY=registry.mapotempo.com
+ - REGISTRY_USERNAME=name
+ - REGISTRY_PASSWORD=pwd

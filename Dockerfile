@@ -1,10 +1,9 @@
-ARG ORTOOLS_URL=${ORTOOLS_URL}
-ARG REGISTRY=${REGISTRY:-registry.mapotempo.com/}
+# 1.0.13 is the latest version containing bundler 2 required for optimizer-api
+FROM phusion/passenger-ruby25:1.0.13
 
-# Final image
-# Build wrapper
-FROM phusion/passenger-ruby25
-ARG ORTOOLS_URL
+ARG ORTOOLS_URL=${ORTOOLS_URL}
+
+LABEL maintainer="Mapotempo <tech@mapotempo.com>"
 
 WORKDIR /srv/
 
@@ -19,5 +18,3 @@ ADD . /srv/optimizer-ortools
 
 WORKDIR /srv/optimizer-ortools
 RUN make tsp_simple
-
-LABEL maintainer="Mapotempo <tech@mapotempo.com>"

@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+env:
+  ORTOOLS_VERSION: v7.8
+  REGISTRY: ${{ secrets.REGISTRY }}
+  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+  REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+  REPOSITORY: ${{ github.repository }}
+
+jobs:
+  build_image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build image
+        id: build
+        run: ./.github/actions/build.sh
+        shell: bash
+      - name: Deliver
+        env:
+          IMAGE_NAME: ${{ steps.build.outputs.image_name }}
+        run: ./.github/actions/deliver.sh
+        shell: bash
